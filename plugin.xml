@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.imp.runtime.languageDescription">
+      <language
+            extensions="asl"
+            description="Program Analysis Specification"
+            language="asl">
+      </language>
+   </extension>
+   <extension
+         id="org.eclipse.imp.pdb.parserWrapper"
+         name="anspec Parser Wrapper"
+         point="org.eclipse.imp.runtime.parser">
+      <parserWrapper
+            class="org.eclipse.imp.asl.AnspecParseController"
+            language="asl">
+      </parserWrapper>
+   </extension>
+
+   <extension
+         id="asl.builder"
+         name="Analysis Specification Language Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder>
+         <run
+               class="org.eclipse.imp.asl.builders.ASLBuilder">
+            <parameter
+                  name="foo"
+                  value="bar">
+            </parameter>
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="asl.nature"
+         name="ASL Nature"
+         point="org.eclipse.core.resources.natures">
+      <builder
+            id="org.eclipse.imp.asl.builder">
+      </builder>
+      <runtime>
+         <run
+               class="org.eclipse.imp.asl.builders.AnspecNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         id="org.eclipse.imp.asl.builder.problem"
+         name="ASL Error"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+   </extension>
+</plugin>

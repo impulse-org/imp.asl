@@ -1,0 +1,4 @@
+AnspecKWLexer*.java
+AnspecLexer*.java
+AnspecParser*.java
+*.l
