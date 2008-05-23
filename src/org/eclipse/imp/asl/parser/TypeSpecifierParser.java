@@ -27,7 +27,6 @@ import org.eclipse.imp.asl.parser.ast.scalarType3;
 import org.eclipse.imp.asl.parser.ast.setSpecifier;
 import org.eclipse.imp.asl.parser.ast.tupleSpecifier;
 import org.eclipse.imp.pdb.facts.type.NamedType;
-import org.eclipse.imp.pdb.facts.type.NullMessageHandler;
 import org.eclipse.imp.pdb.facts.type.Type;
 import org.eclipse.imp.pdb.facts.type.TypeFactory;
 
