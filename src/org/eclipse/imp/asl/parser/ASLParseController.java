@@ -14,6 +14,7 @@ package org.eclipse.imp.asl.parser;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.imp.asl.ASLPlugin;
 import org.eclipse.imp.model.ISourceProject;
 import org.eclipse.imp.parser.IMessageHandler;
 import org.eclipse.imp.parser.ISourcePositionLocator;
@@ -44,6 +45,7 @@ public class ASLParseController extends SimpleLPGParseController implements IPar
     private IPath fullFilePath;
 
     public ASLParseController() {
+        super(ASLPlugin.kLanguageName);
         lexer= new ASLLexer();
         parser= new ASLParser();
     }
