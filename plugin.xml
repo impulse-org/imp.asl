@@ -10,13 +10,13 @@
       </language>
    </extension>
    <extension
-         id="org.eclipse.imp.pdb.parserWrapper"
-         name="anspec Parser Wrapper"
+         id="org.eclipse.imp.asl.parser"
+         name="anspec Parser"
          point="org.eclipse.imp.runtime.parser">
-      <parserWrapper
-            class="org.eclipse.imp.asl.AnspecParseController"
+      <parser
+            class="org.eclipse.imp.asl.parser.ASLParseController"
             language="asl">
-      </parserWrapper>
+      </parser>
    </extension>
 
    <extension
@@ -25,7 +25,7 @@
          point="org.eclipse.core.resources.builders">
       <builder>
          <run
-               class="org.eclipse.imp.asl.builders.ASLBuilder">
+               class="org.eclipse.imp.asl.builder.ASLBuilder">
             <parameter
                   name="foo"
                   value="bar">
@@ -42,7 +42,7 @@
       </builder>
       <runtime>
          <run
-               class="org.eclipse.imp.asl.builders.AnspecNature">
+               class="org.eclipse.imp.asl.builder.ASLNature">
          </run>
       </runtime>
    </extension>
