@@ -12,8 +12,6 @@
 
 package org.eclipse.imp.asl;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.imp.preferences.PreferencesService;
 import org.eclipse.imp.runtime.PluginBase;
 import org.osgi.framework.BundleContext;
 
@@ -59,17 +57,8 @@ public class ASLPlugin extends PluginBase {
         return kPluginID;
     }
 
-    protected static PreferencesService preferencesService= null;
-
-    public static PreferencesService getPreferencesService() {
-        if (preferencesService == null) {
-            preferencesService= new PreferencesService(ResourcesPlugin.getWorkspace().getRoot().getProject());
-            preferencesService.setLanguageName(kLanguageName);
-            // TODO:  When some actual preferences are created, put
-            // a call to the preferences initializer here
-            // (The IMP New Preferences Support wizard creates such
-            // an initializer.)
-        }
-        return preferencesService;
+    @Override
+    public String getLanguageID() {
+        return kLanguageName;
     }
 }
