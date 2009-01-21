@@ -26,7 +26,7 @@ import org.eclipse.imp.asl.parser.ast.scalarType2;
 import org.eclipse.imp.asl.parser.ast.scalarType3;
 import org.eclipse.imp.asl.parser.ast.setSpecifier;
 import org.eclipse.imp.asl.parser.ast.tupleSpecifier;
-import org.eclipse.imp.pdb.facts.type.NamedType;
+import org.eclipse.imp.pdb.facts.type.ITypeVisitor;
 import org.eclipse.imp.pdb.facts.type.Type;
 import org.eclipse.imp.pdb.facts.type.TypeFactory;
 
@@ -42,15 +42,15 @@ public class TypeSpecifierParser {
     
     private final class MarkerType extends Type {
         @Override
-        public String getTypeDescriptor() {
-            throw new UnsupportedOperationException();
-        }
-        @Override
         public boolean isSubtypeOf(Type other) {
             throw new UnsupportedOperationException();
         }
         @Override
         public Type lub(Type other) {
+            throw new UnsupportedOperationException();
+        }
+        @Override
+        public <T> T accept(ITypeVisitor<T> visitor) {
             throw new UnsupportedOperationException();
         }
     }
@@ -97,7 +97,7 @@ public class TypeSpecifierParser {
             @Override
             public void endVisit(relationSpecifier n) {
                 List<Type> fieldTypes= popToMark();
-                fStack.push(tf.relType(tf.tupleTypeOf(fieldTypes)));
+                fStack.push(tf.relType(tf.tupleType(fieldTypes.toArray())));
             }
             @Override
             public boolean visit(tupleSpecifier n) {
@@ -107,12 +107,12 @@ public class TypeSpecifierParser {
             @Override
             public void endVisit(tupleSpecifier n) {
                 List<Type> fieldTypes= popToMark();
-                fStack.push(tf.tupleTypeOf(fieldTypes));
+                fStack.push(tf.tupleType(fieldTypes.toArray()));
             }
             @Override
             public void endVisit(setSpecifier n) {
                 Type elemType= fStack.pop();
-                fStack.push(tf.setTypeOf(elemType));
+                fStack.push(tf.setType(elemType));
             }
             @Override
             public void endVisit(scalarType0 n) {
@@ -128,7 +128,7 @@ public class TypeSpecifierParser {
             }
             @Override
             public void endVisit(qualifiedIdentifier n) {
-                NamedType nType= tf.lookup(n.toString());
+                Type nType= tf.lookupNamedType(n.toString());
                 if (nType != null) {
                     fStack.push(nType);
                 }
