@@ -1,46 +1,44 @@
 
-Options in effect for E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi:
+Options in effect for /Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi:
 
-    ACTION-BLOCK=("E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.java","/.","./")
+    ACTION-BLOCK=("/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.java","/.","./")
 
     AST-DIRECTORY="./ast"  AST-TYPE="Ast"  NOATTRIBUTES  NOAUTOMATIC-AST  
     NOBACKTRACK  BYTE  CONFLICTS  
-    DAT-DIRECTORY="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/"
+    DAT-DIRECTORY="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/"
     
-    DAT-FILE="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerdcl.data"
+    DAT-FILE="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerdcl.data"
     
-    DCL-FILE="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerdcl.java"
+    DCL-FILE="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerdcl.java"
     NODEBUG  
-    DEF-FILE="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerdef.java"
+    DEF-FILE="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerdef.java"
     NOEDIT  NOERROR-MAPS  ESCAPE='$'  
-    EXPORT-TERMINALS=("E:\RMF\eclipse\workspaces\imp-3.2\org.eclipse.imp.asl\src\org\eclipse\imp\asl\parser\ASLParsersym.java","TK_","")
+    EXPORT-TERMINALS=("/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLParsersym.java","TK_","")
     EXTENDS-PARSETABLE  FACTORY="new "  FILE-PREFIX="ASLLexer"  
     FILTER="ASLKWLexer.gi"  NOFIRST  NOFOLLOW  NOGLR  NOGOTO-DEFAULT  
-    GRM-FILE="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi"
+    GRM-FILE="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi"
     
-    IMP-FILE="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerimp.java"
+    IMP-FILE="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerimp.java"
     
-    INCLUDE-DIRECTORY="E:\RMF\eclipse\workspaces\imp-3.2\lpg.runtime.java\templates;E:\RMF\eclipse\workspaces\imp-3.2\org.eclipse.imp.lpg.metatooling\templates;E:\RMF\eclipse\workspaces\imp-3.2\lpg.runtime.java\include;"
+    INCLUDE-DIRECTORY="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/lpg.generator/templates/java;/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/lpg.generator/include/java;"
     LALR=1  LEGACY  NOLIST  MARGIN=4  MAX-CASES=1024  NAMES=OPTIMIZED  
     NONT-CHECK  OR_MARKER='|'  
-    OUT-DIRECTORY="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/"
+    OUT-DIRECTORY="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/"
     PACKAGE="org.eclipse.imp.asl.parser"  NOPARENT-SAVE  
     PARSETABLE-INTERFACES="lpg.runtime.ParseTable"  PREFIX="Char_"  PRIORITY  
     PROGRAMMING_LANGUAGE=JAVA  
-    PRS-FILE="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerprs.java"
+    PRS-FILE="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexerprs.java"
     NOQUIET  READ-REDUCE  REMAP-TERMINALS  NOSCOPES  NOSERIALIZE  
     NOSHIFT-DEFAULT  NOSINGLE-PRODUCTIONS  NOSOFT-KEYWORDS  NOSTATES  SUFFIX=""
-    SYM-FILE="E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexersym.java"
+    SYM-FILE="/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexersym.java"
     TAB-FILE="ASLLexer.t"  TABLE  TEMPLATE="LexerTemplateF.gi"  TRACE=CONFLICTS
     NOVARIABLES  NOVERBOSE  NOVISITOR  VISITOR-TYPE="Visitor"  WARNINGS  NOXREF
 
-E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi:49:5:49:16:727:738: Informative: The terminal CtlCharNotWS is useless.
-E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi:62:5:62:14:1105:1114: Informative: The terminal AfterASCII is useless.
+/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi:49:5:49:16:727:738: Informative: The terminal CtlCharNotWS is useless.
+/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi:62:5:62:14:1105:1114: Informative: The terminal AfterASCII is useless.
 
 
-
-E:/RMF/eclipse/workspaces/imp-3.2/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi is LALR(1).
-
+/Users/rmfuhrer/eclipse/workspaces/imp-3.3-release/org.eclipse.imp.asl/src/org/eclipse/imp/asl/parser/ASLLexer.gi:102:5:102:9:2118:2122: Informative: Grammar is  LALR(1).
 
 Number of Terminals: 102
 Number of Nonterminals: 44

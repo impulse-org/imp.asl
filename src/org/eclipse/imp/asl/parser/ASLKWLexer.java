@@ -1,20 +1,21 @@
-/*******************************************************************************
-* Copyright (c) 2007 IBM Corporation.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*    Robert Fuhrer (rfuhrer@watson.ibm.com) - initial API and implementation
 
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2007 IBM Corporation.
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+//
+//Contributors:
+//    Philippe Charles (pcharles@us.ibm.com) - initial API and implementation
+
+////////////////////////////////////////////////////////////////////////////////
 
 package org.eclipse.imp.asl.parser;
 
 import lpg.runtime.*;
 
-public class ASLKWLexer extends ASLKWLexerprs implements ASLParsersym
+public class ASLKWLexer extends ASLKWLexerprs
 {
     private char[] inputChars;
     private final int keywordKind[] = new int[22 + 1];
@@ -32,7 +33,7 @@ public class ASLKWLexer extends ASLKWLexerprs implements ASLParsersym
         {
             curtok++;
             current_kind = (curtok > lasttok
-                                   ? Char_EOF
+                                   ? ASLKWLexersym.Char_EOF
                                    : getKind(inputChars[curtok]));
         }
 
@@ -51,67 +52,68 @@ public class ASLKWLexer extends ASLKWLexerprs implements ASLParsersym
     final static int tokenKind[] = new int[128];
     static
     {
-        tokenKind['$'] = Char_DollarSign;
-        tokenKind['_'] = Char__;
+        tokenKind['$'] = ASLKWLexersym.Char_DollarSign;
+        tokenKind['%'] = ASLKWLexersym.Char_Percent;
+        tokenKind['_'] = ASLKWLexersym.Char__;
 
-        tokenKind['a'] = Char_a;
-        tokenKind['b'] = Char_b;
-        tokenKind['c'] = Char_c;
-        tokenKind['d'] = Char_d;
-        tokenKind['e'] = Char_e;
-        tokenKind['f'] = Char_f;
-        tokenKind['g'] = Char_g;
-        tokenKind['h'] = Char_h;
-        tokenKind['i'] = Char_i;
-        tokenKind['j'] = Char_j;
-        tokenKind['k'] = Char_k;
-        tokenKind['l'] = Char_l;
-        tokenKind['m'] = Char_m;
-        tokenKind['n'] = Char_n;
-        tokenKind['o'] = Char_o;
-        tokenKind['p'] = Char_p;
-        tokenKind['q'] = Char_q;
-        tokenKind['r'] = Char_r;
-        tokenKind['s'] = Char_s;
-        tokenKind['t'] = Char_t;
-        tokenKind['u'] = Char_u;
-        tokenKind['v'] = Char_v;
-        tokenKind['w'] = Char_w;
-        tokenKind['x'] = Char_x;
-        tokenKind['y'] = Char_y;
-        tokenKind['z'] = Char_z;
+        tokenKind['a'] = ASLKWLexersym.Char_a;
+        tokenKind['b'] = ASLKWLexersym.Char_b;
+        tokenKind['c'] = ASLKWLexersym.Char_c;
+        tokenKind['d'] = ASLKWLexersym.Char_d;
+        tokenKind['e'] = ASLKWLexersym.Char_e;
+        tokenKind['f'] = ASLKWLexersym.Char_f;
+        tokenKind['g'] = ASLKWLexersym.Char_g;
+        tokenKind['h'] = ASLKWLexersym.Char_h;
+        tokenKind['i'] = ASLKWLexersym.Char_i;
+        tokenKind['j'] = ASLKWLexersym.Char_j;
+        tokenKind['k'] = ASLKWLexersym.Char_k;
+        tokenKind['l'] = ASLKWLexersym.Char_l;
+        tokenKind['m'] = ASLKWLexersym.Char_m;
+        tokenKind['n'] = ASLKWLexersym.Char_n;
+        tokenKind['o'] = ASLKWLexersym.Char_o;
+        tokenKind['p'] = ASLKWLexersym.Char_p;
+        tokenKind['q'] = ASLKWLexersym.Char_q;
+        tokenKind['r'] = ASLKWLexersym.Char_r;
+        tokenKind['s'] = ASLKWLexersym.Char_s;
+        tokenKind['t'] = ASLKWLexersym.Char_t;
+        tokenKind['u'] = ASLKWLexersym.Char_u;
+        tokenKind['v'] = ASLKWLexersym.Char_v;
+        tokenKind['w'] = ASLKWLexersym.Char_w;
+        tokenKind['x'] = ASLKWLexersym.Char_x;
+        tokenKind['y'] = ASLKWLexersym.Char_y;
+        tokenKind['z'] = ASLKWLexersym.Char_z;
 
-        tokenKind['A'] = Char_A;
-        tokenKind['B'] = Char_B;
-        tokenKind['C'] = Char_C;
-        tokenKind['D'] = Char_D;
-        tokenKind['E'] = Char_E;
-        tokenKind['F'] = Char_F;
-        tokenKind['G'] = Char_G;
-        tokenKind['H'] = Char_H;
-        tokenKind['I'] = Char_I;
-        tokenKind['J'] = Char_J;
-        tokenKind['K'] = Char_K;
-        tokenKind['L'] = Char_L;
-        tokenKind['M'] = Char_M;
-        tokenKind['N'] = Char_N;
-        tokenKind['O'] = Char_O;
-        tokenKind['P'] = Char_P;
-        tokenKind['Q'] = Char_Q;
-        tokenKind['R'] = Char_R;
-        tokenKind['S'] = Char_S;
-        tokenKind['T'] = Char_T;
-        tokenKind['U'] = Char_U;
-        tokenKind['V'] = Char_V;
-        tokenKind['W'] = Char_W;
-        tokenKind['X'] = Char_X;
-        tokenKind['Y'] = Char_Y;
-        tokenKind['Z'] = Char_Z;
+        tokenKind['A'] = ASLKWLexersym.Char_A;
+        tokenKind['B'] = ASLKWLexersym.Char_B;
+        tokenKind['C'] = ASLKWLexersym.Char_C;
+        tokenKind['D'] = ASLKWLexersym.Char_D;
+        tokenKind['E'] = ASLKWLexersym.Char_E;
+        tokenKind['F'] = ASLKWLexersym.Char_F;
+        tokenKind['G'] = ASLKWLexersym.Char_G;
+        tokenKind['H'] = ASLKWLexersym.Char_H;
+        tokenKind['I'] = ASLKWLexersym.Char_I;
+        tokenKind['J'] = ASLKWLexersym.Char_J;
+        tokenKind['K'] = ASLKWLexersym.Char_K;
+        tokenKind['L'] = ASLKWLexersym.Char_L;
+        tokenKind['M'] = ASLKWLexersym.Char_M;
+        tokenKind['N'] = ASLKWLexersym.Char_N;
+        tokenKind['O'] = ASLKWLexersym.Char_O;
+        tokenKind['P'] = ASLKWLexersym.Char_P;
+        tokenKind['Q'] = ASLKWLexersym.Char_Q;
+        tokenKind['R'] = ASLKWLexersym.Char_R;
+        tokenKind['S'] = ASLKWLexersym.Char_S;
+        tokenKind['T'] = ASLKWLexersym.Char_T;
+        tokenKind['U'] = ASLKWLexersym.Char_U;
+        tokenKind['V'] = ASLKWLexersym.Char_V;
+        tokenKind['W'] = ASLKWLexersym.Char_W;
+        tokenKind['X'] = ASLKWLexersym.Char_X;
+        tokenKind['Y'] = ASLKWLexersym.Char_Y;
+        tokenKind['Z'] = ASLKWLexersym.Char_Z;
     };
 
     final int getKind(char c)
     {
-        return (c < 128 ? tokenKind[c] : 0);
+        return (((c & 0xFFFFFF80) == 0) /* 0 <= c < 128? */ ? tokenKind[c] : 0);
     }
 
 
@@ -124,154 +126,154 @@ public class ASLKWLexer extends ASLKWLexerprs implements ASLParsersym
         // Rule 1:  Keyword ::= a n a l y s i s
         //
         
-        keywordKind[1] = (TK_analysis);
+        keywordKind[1] = (ASLParsersym.TK_analysis);
       
     
         //
         // Rule 2:  Keyword ::= a t y p e
         //
         
-        keywordKind[2] = (TK_atype);
+        keywordKind[2] = (ASLParsersym.TK_atype);
       
     
         //
         // Rule 3:  Keyword ::= b o o l e a n
         //
         
-        keywordKind[3] = (TK_boolean);
+        keywordKind[3] = (ASLParsersym.TK_boolean);
       
     
         //
         // Rule 4:  Keyword ::= c a s e
         //
         
-        keywordKind[4] = (TK_case);
+        keywordKind[4] = (ASLParsersym.TK_case);
       
     
         //
         // Rule 5:  Keyword ::= c o n s t r a i n t s
         //
         
-        keywordKind[5] = (TK_constraints);
+        keywordKind[5] = (ASLParsersym.TK_constraints);
       
     
         //
         // Rule 6:  Keyword ::= d o u b l e
         //
         
-        keywordKind[6] = (TK_double);
+        keywordKind[6] = (ASLParsersym.TK_double);
       
     
         //
         // Rule 7:  Keyword ::= e l s e
         //
         
-        keywordKind[7] = (TK_else);
+        keywordKind[7] = (ASLParsersym.TK_else);
       
     
         //
         // Rule 8:  Keyword ::= e n d
         //
         
-        keywordKind[8] = (TK_end);
+        keywordKind[8] = (ASLParsersym.TK_end);
       
     
         //
         // Rule 9:  Keyword ::= e s t i m a t e s
         //
         
-        keywordKind[9] = (TK_estimates);
+        keywordKind[9] = (ASLParsersym.TK_estimates);
       
     
         //
         // Rule 10:  Keyword ::= f a l s e
         //
         
-        keywordKind[10] = (TK_false);
+        keywordKind[10] = (ASLParsersym.TK_false);
       
     
         //
         // Rule 11:  Keyword ::= i n t
         //
         
-        keywordKind[11] = (TK_int);
+        keywordKind[11] = (ASLParsersym.TK_int);
       
     
         //
         // Rule 12:  Keyword ::= i n t e r s e c t
         //
         
-        keywordKind[12] = (TK_intersect);
+        keywordKind[12] = (ASLParsersym.TK_intersect);
       
     
         //
         // Rule 13:  Keyword ::= r e f
         //
         
-        keywordKind[13] = (TK_ref);
+        keywordKind[13] = (ASLParsersym.TK_ref);
       
     
         //
         // Rule 14:  Keyword ::= r e l a t i o n
         //
         
-        keywordKind[14] = (TK_relation);
+        keywordKind[14] = (ASLParsersym.TK_relation);
       
     
         //
         // Rule 15:  Keyword ::= r e t u r n
         //
         
-        keywordKind[15] = (TK_return);
+        keywordKind[15] = (ASLParsersym.TK_return);
       
     
         //
         // Rule 16:  Keyword ::= r u l e s
         //
         
-        keywordKind[16] = (TK_rules);
+        keywordKind[16] = (ASLParsersym.TK_rules);
       
     
         //
         // Rule 17:  Keyword ::= s a t i s f y
         //
         
-        keywordKind[17] = (TK_satisfy);
+        keywordKind[17] = (ASLParsersym.TK_satisfy);
       
     
         //
         // Rule 18:  Keyword ::= s e t
         //
         
-        keywordKind[18] = (TK_set);
+        keywordKind[18] = (ASLParsersym.TK_set);
       
     
         //
         // Rule 19:  Keyword ::= s t r i n g
         //
         
-        keywordKind[19] = (TK_string);
+        keywordKind[19] = (ASLParsersym.TK_string);
       
     
         //
         // Rule 20:  Keyword ::= t r u e
         //
         
-        keywordKind[20] = (TK_true);
+        keywordKind[20] = (ASLParsersym.TK_true);
       
     
         //
         // Rule 21:  Keyword ::= t y p e
         //
         
-        keywordKind[21] = (TK_type);
+        keywordKind[21] = (ASLParsersym.TK_type);
       
     
         //
         // Rule 22:  Keyword ::= u n i o n
         //
         
-        keywordKind[22] = (TK_union);
+        keywordKind[22] = (ASLParsersym.TK_union);
       
     
         for (int i = 0; i < keywordKind.length; i++)

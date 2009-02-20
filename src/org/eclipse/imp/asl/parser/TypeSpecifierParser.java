@@ -58,9 +58,9 @@ public class TypeSpecifierParser {
     private Type parseTypeSpecifier(String typeSpec) {
         char[] contentsArray= typeSpec.toCharArray();
         fTypeSpecLexer.reset(contentsArray, null /*fullFilePath.toOSString()*/);
-        fTypeSpecParser.reset(fTypeSpecLexer.getLexStream());
-        fTypeSpecParser.getParseStream().setMessageHandler(new NullMessageHandler());
-        fTypeSpecLexer.lexer(null, fTypeSpecParser.getParseStream());
+        fTypeSpecParser.reset(fTypeSpecLexer.getILexStream());
+        fTypeSpecParser.getIPrsStream().setMessageHandler(new NullMessageHandler());
+        fTypeSpecLexer.lexer(null, fTypeSpecParser.getIPrsStream());
 
         ASTNode root= (ASTNode) fTypeSpecParser.parsetypeSpecifier(null, 0);
 

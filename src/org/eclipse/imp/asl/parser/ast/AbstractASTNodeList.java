@@ -1,14 +1,15 @@
-/*******************************************************************************
-* Copyright (c) 2007 IBM Corporation.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*    Robert Fuhrer (rfuhrer@watson.ibm.com) - initial API and implementation
 
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2007 IBM Corporation.
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+//
+//Contributors:
+//    Philippe Charles (pcharles@us.ibm.com) - initial API and implementation
+
+////////////////////////////////////////////////////////////////////////////////
 
 package org.eclipse.imp.asl.parser.ast;
 
@@ -67,18 +68,6 @@ public abstract class AbstractASTNodeList extends ASTNode
         return (java.util.ArrayList) getArrayList().clone();
     }
 
-    public abstract boolean equals(Object o);
-
-    public int hashCode()
-    {
-        int hash = 7;
-        for (int i = 0; i < size(); i++)
-        {
-            ASTNode element = getElementAt(i);
-            hash = hash * 31 + (element == null ? 0 : element.hashCode());
-        }
-        return hash;
-    }
 }
 
 

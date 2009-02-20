@@ -1,21 +1,23 @@
-/*******************************************************************************
-* Copyright (c) 2007 IBM Corporation.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*    Robert Fuhrer (rfuhrer@watson.ibm.com) - initial API and implementation
 
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2007 IBM Corporation.
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+//
+//Contributors:
+//    Philippe Charles (pcharles@us.ibm.com) - initial API and implementation
+
+////////////////////////////////////////////////////////////////////////////////
 
 package org.eclipse.imp.asl.parser;
 
 public interface ASLKWLexersym {
     public final static int
       Char_DollarSign = 20,
-      Char__ = 21,
+      Char_Percent = 21,
+      Char__ = 22,
       Char_a = 5,
       Char_b = 13,
       Char_c = 14,
@@ -23,51 +25,51 @@ public interface ASLKWLexersym {
       Char_e = 1,
       Char_f = 12,
       Char_g = 17,
-      Char_h = 22,
+      Char_h = 23,
       Char_i = 6,
-      Char_j = 23,
-      Char_k = 24,
+      Char_j = 24,
+      Char_k = 25,
       Char_l = 7,
       Char_m = 18,
       Char_n = 4,
       Char_o = 8,
       Char_p = 16,
-      Char_q = 25,
+      Char_q = 26,
       Char_r = 9,
       Char_s = 2,
       Char_t = 3,
       Char_u = 10,
-      Char_v = 26,
-      Char_w = 27,
-      Char_x = 28,
+      Char_v = 27,
+      Char_w = 28,
+      Char_x = 29,
       Char_y = 11,
-      Char_z = 29,
-      Char_A = 30,
-      Char_B = 31,
-      Char_C = 32,
-      Char_D = 33,
-      Char_E = 34,
-      Char_F = 35,
-      Char_G = 36,
-      Char_H = 37,
-      Char_I = 38,
-      Char_J = 39,
-      Char_K = 40,
-      Char_L = 41,
-      Char_M = 42,
-      Char_N = 43,
-      Char_O = 44,
-      Char_P = 45,
-      Char_Q = 46,
-      Char_R = 47,
-      Char_S = 48,
-      Char_T = 49,
-      Char_U = 50,
-      Char_V = 51,
-      Char_W = 52,
-      Char_X = 53,
-      Char_Y = 54,
-      Char_Z = 55,
+      Char_z = 30,
+      Char_A = 31,
+      Char_B = 32,
+      Char_C = 33,
+      Char_D = 34,
+      Char_E = 35,
+      Char_F = 36,
+      Char_G = 37,
+      Char_H = 38,
+      Char_I = 39,
+      Char_J = 40,
+      Char_K = 41,
+      Char_L = 42,
+      Char_M = 43,
+      Char_N = 44,
+      Char_O = 45,
+      Char_P = 46,
+      Char_Q = 47,
+      Char_R = 48,
+      Char_S = 49,
+      Char_T = 50,
+      Char_U = 51,
+      Char_V = 52,
+      Char_W = 53,
+      Char_X = 54,
+      Char_Y = 55,
+      Char_Z = 56,
       Char_EOF = 19;
 
     public final static String orderedTerminalSymbols[] = {
@@ -92,6 +94,7 @@ public interface ASLKWLexersym {
                  "m",
                  "EOF",
                  "DollarSign",
+                 "Percent",
                  "_",
                  "h",
                  "j",

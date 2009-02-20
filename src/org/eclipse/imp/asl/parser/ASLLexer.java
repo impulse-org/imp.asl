@@ -1,14 +1,15 @@
-/*******************************************************************************
-* Copyright (c) 2007 IBM Corporation.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*    Robert Fuhrer (rfuhrer@watson.ibm.com) - initial API and implementation
 
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2007 IBM Corporation.
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+//
+//Contributors:
+//    Philippe Charles (pcharles@us.ibm.com) - initial API and implementation
+
+////////////////////////////////////////////////////////////////////////////////
 
 package org.eclipse.imp.asl.parser;
 
@@ -16,7 +17,7 @@ import lpg.runtime.*;
 import java.util.*;
 import org.eclipse.imp.parser.ILexer;
 
-public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
+public class ASLLexer implements RuleAction, ILexer
 {
     private ASLLexerLpgLexStream lexStream;
     
@@ -36,7 +37,7 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
     public void resetKeywordLexer()
     {
         if (kwLexer == null)
-              this.kwLexer = new ASLKWLexer(lexStream.getInputChars(), TK_IDENTIFIER);
+              this.kwLexer = new ASLKWLexer(lexStream.getInputChars(), ASLParsersym.TK_IDENTIFIER);
         else this.kwLexer.setInputChars(lexStream.getInputChars());
     }
 
@@ -76,7 +77,12 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
 
     public ASLLexer() {}
 
-    public LexStream getLexStream() { return lexStream; }
+    public ILexStream getILexStream() { return lexStream; }
+
+    /**
+     * @deprecated replaced by {@link #getILexStream()}
+     */
+    public ILexStream getLexStream() { return lexStream; }
 
     private void initializeLexer(IPrsStream prsStream, int start_offset, int end_offset)
     {
@@ -88,7 +94,7 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
 
     private void addEOF(IPrsStream prsStream, int end_offset)
     {
-        prsStream.makeToken(end_offset, end_offset, TK_EOF_TOKEN); // and end with the end of file token
+        prsStream.makeToken(end_offset, end_offset, ASLParsersym.TK_EOF_TOKEN); // and end with the end of file token
         prsStream.setStreamLength(prsStream.getSize());
     }
 
@@ -160,7 +166,7 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
     public ASLLexer(String filename) throws java.io.IOException
     {
         this(filename, ECLIPSE_TAB_VALUE);
-        this.kwLexer = new ASLKWLexer(lexStream.getInputChars(), TK_IDENTIFIER);
+        this.kwLexer = new ASLKWLexer(lexStream.getInputChars(), ASLParsersym.TK_IDENTIFIER);
     }
 
     /**
@@ -188,7 +194,7 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
     {
         int startOffset = getLeftSpan(),
             endOffset = getRightSpan();
-        lexStream.getPrsStream().makeAdjunct(startOffset, endOffset, kind);
+        lexStream.getIPrsStream().makeAdjunct(startOffset, endOffset, kind);
     }
 
     final void skipToken()
@@ -205,15 +211,17 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
         if (printTokens) printValue(startOffset, endOffset);
     }
     
+    //
     // This flavor of checkForKeyWord is necessary when the default kind
     // (which is returned when the keyword filter doesn't match) is something
     // other than _IDENTIFIER.
+    //
     final void checkForKeyWord(int defaultKind)
     {
         int startOffset = getLeftSpan(),
             endOffset = getRightSpan(),
             kwKind = kwLexer.lexer(startOffset, endOffset);
-        if (kwKind == TK_IDENTIFIER)
+        if (kwKind == ASLParsersym.TK_IDENTIFIER)
             kwKind = defaultKind;
         lexStream.makeToken(startOffset, endOffset, kwKind);
         if (printTokens) printValue(startOffset, endOffset);
@@ -232,136 +240,136 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
     {
     public final static int tokenKind[] =
     {
-        Char_CtlCharNotWS,    // 000    0x00
-        Char_CtlCharNotWS,    // 001    0x01
-        Char_CtlCharNotWS,    // 002    0x02
-        Char_CtlCharNotWS,    // 003    0x03
-        Char_CtlCharNotWS,    // 004    0x04
-        Char_CtlCharNotWS,    // 005    0x05
-        Char_CtlCharNotWS,    // 006    0x06
-        Char_CtlCharNotWS,    // 007    0x07
-        Char_CtlCharNotWS,    // 008    0x08
-        Char_HT,              // 009    0x09
-        Char_LF,              // 010    0x0A
-        Char_CtlCharNotWS,    // 011    0x0B
-        Char_FF,              // 012    0x0C
-        Char_CR,              // 013    0x0D
-        Char_CtlCharNotWS,    // 014    0x0E
-        Char_CtlCharNotWS,    // 015    0x0F
-        Char_CtlCharNotWS,    // 016    0x10
-        Char_CtlCharNotWS,    // 017    0x11
-        Char_CtlCharNotWS,    // 018    0x12
-        Char_CtlCharNotWS,    // 019    0x13
-        Char_CtlCharNotWS,    // 020    0x14
-        Char_CtlCharNotWS,    // 021    0x15
-        Char_CtlCharNotWS,    // 022    0x16
-        Char_CtlCharNotWS,    // 023    0x17
-        Char_CtlCharNotWS,    // 024    0x18
-        Char_CtlCharNotWS,    // 025    0x19
-        Char_CtlCharNotWS,    // 026    0x1A
-        Char_CtlCharNotWS,    // 027    0x1B
-        Char_CtlCharNotWS,    // 028    0x1C
-        Char_CtlCharNotWS,    // 029    0x1D
-        Char_CtlCharNotWS,    // 030    0x1E
-        Char_CtlCharNotWS,    // 031    0x1F
-        Char_Space,           // 032    0x20
-        Char_Exclamation,     // 033    0x21
-        Char_DoubleQuote,     // 034    0x22
-        Char_Sharp,           // 035    0x23
-        Char_DollarSign,      // 036    0x24
-        Char_Percent,         // 037    0x25
-        Char_Ampersand,       // 038    0x26
-        Char_SingleQuote,     // 039    0x27
-        Char_LeftParen,       // 040    0x28
-        Char_RightParen,      // 041    0x29
-        Char_Star,            // 042    0x2A
-        Char_Plus,            // 043    0x2B
-        Char_Comma,           // 044    0x2C
-        Char_Minus,           // 045    0x2D
-        Char_Dot,             // 046    0x2E
-        Char_Slash,           // 047    0x2F
-        Char_0,               // 048    0x30
-        Char_1,               // 049    0x31
-        Char_2,               // 050    0x32
-        Char_3,               // 051    0x33
-        Char_4,               // 052    0x34
-        Char_5,               // 053    0x35
-        Char_6,               // 054    0x36
-        Char_7,               // 055    0x37
-        Char_8,               // 056    0x38
-        Char_9,               // 057    0x39
-        Char_Colon,           // 058    0x3A
-        Char_SemiColon,       // 059    0x3B
-        Char_LessThan,        // 060    0x3C
-        Char_Equal,           // 061    0x3D
-        Char_GreaterThan,     // 062    0x3E
-        Char_QuestionMark,    // 063    0x3F
-        Char_AtSign,          // 064    0x40
-        Char_A,               // 065    0x41
-        Char_B,               // 066    0x42
-        Char_C,               // 067    0x43
-        Char_D,               // 068    0x44
-        Char_E,               // 069    0x45
-        Char_F,               // 070    0x46
-        Char_G,               // 071    0x47
-        Char_H,               // 072    0x48
-        Char_I,               // 073    0x49
-        Char_J,               // 074    0x4A
-        Char_K,               // 075    0x4B
-        Char_L,               // 076    0x4C
-        Char_M,               // 077    0x4D
-        Char_N,               // 078    0x4E
-        Char_O,               // 079    0x4F
-        Char_P,               // 080    0x50
-        Char_Q,               // 081    0x51
-        Char_R,               // 082    0x52
-        Char_S,               // 083    0x53
-        Char_T,               // 084    0x54
-        Char_U,               // 085    0x55
-        Char_V,               // 086    0x56
-        Char_W,               // 087    0x57
-        Char_X,               // 088    0x58
-        Char_Y,               // 089    0x59
-        Char_Z,               // 090    0x5A
-        Char_LeftBracket,     // 091    0x5B
-        Char_BackSlash,       // 092    0x5C
-        Char_RightBracket,    // 093    0x5D
-        Char_Caret,           // 094    0x5E
-        Char__,               // 095    0x5F
-        Char_BackQuote,       // 096    0x60
-        Char_a,               // 097    0x61
-        Char_b,               // 098    0x62
-        Char_c,               // 099    0x63
-        Char_d,               // 100    0x64
-        Char_e,               // 101    0x65
-        Char_f,               // 102    0x66
-        Char_g,               // 103    0x67
-        Char_h,               // 104    0x68
-        Char_i,               // 105    0x69
-        Char_j,               // 106    0x6A
-        Char_k,               // 107    0x6B
-        Char_l,               // 108    0x6C
-        Char_m,               // 109    0x6D
-        Char_n,               // 110    0x6E
-        Char_o,               // 111    0x6F
-        Char_p,               // 112    0x70
-        Char_q,               // 113    0x71
-        Char_r,               // 114    0x72
-        Char_s,               // 115    0x73
-        Char_t,               // 116    0x74
-        Char_u,               // 117    0x75
-        Char_v,               // 118    0x76
-        Char_w,               // 119    0x77
-        Char_x,               // 120    0x78
-        Char_y,               // 121    0x79
-        Char_z,               // 122    0x7A
-        Char_LeftBrace,       // 123    0x7B
-        Char_VerticalBar,     // 124    0x7C
-        Char_RightBrace,      // 125    0x7D
-        Char_Tilde,           // 126    0x7E
+        ASLLexersym.Char_CtlCharNotWS,    // 000    0x00
+        ASLLexersym.Char_CtlCharNotWS,    // 001    0x01
+        ASLLexersym.Char_CtlCharNotWS,    // 002    0x02
+        ASLLexersym.Char_CtlCharNotWS,    // 003    0x03
+        ASLLexersym.Char_CtlCharNotWS,    // 004    0x04
+        ASLLexersym.Char_CtlCharNotWS,    // 005    0x05
+        ASLLexersym.Char_CtlCharNotWS,    // 006    0x06
+        ASLLexersym.Char_CtlCharNotWS,    // 007    0x07
+        ASLLexersym.Char_CtlCharNotWS,    // 008    0x08
+        ASLLexersym.Char_HT,              // 009    0x09
+        ASLLexersym.Char_LF,              // 010    0x0A
+        ASLLexersym.Char_CtlCharNotWS,    // 011    0x0B
+        ASLLexersym.Char_FF,              // 012    0x0C
+        ASLLexersym.Char_CR,              // 013    0x0D
+        ASLLexersym.Char_CtlCharNotWS,    // 014    0x0E
+        ASLLexersym.Char_CtlCharNotWS,    // 015    0x0F
+        ASLLexersym.Char_CtlCharNotWS,    // 016    0x10
+        ASLLexersym.Char_CtlCharNotWS,    // 017    0x11
+        ASLLexersym.Char_CtlCharNotWS,    // 018    0x12
+        ASLLexersym.Char_CtlCharNotWS,    // 019    0x13
+        ASLLexersym.Char_CtlCharNotWS,    // 020    0x14
+        ASLLexersym.Char_CtlCharNotWS,    // 021    0x15
+        ASLLexersym.Char_CtlCharNotWS,    // 022    0x16
+        ASLLexersym.Char_CtlCharNotWS,    // 023    0x17
+        ASLLexersym.Char_CtlCharNotWS,    // 024    0x18
+        ASLLexersym.Char_CtlCharNotWS,    // 025    0x19
+        ASLLexersym.Char_CtlCharNotWS,    // 026    0x1A
+        ASLLexersym.Char_CtlCharNotWS,    // 027    0x1B
+        ASLLexersym.Char_CtlCharNotWS,    // 028    0x1C
+        ASLLexersym.Char_CtlCharNotWS,    // 029    0x1D
+        ASLLexersym.Char_CtlCharNotWS,    // 030    0x1E
+        ASLLexersym.Char_CtlCharNotWS,    // 031    0x1F
+        ASLLexersym.Char_Space,           // 032    0x20
+        ASLLexersym.Char_Exclamation,     // 033    0x21
+        ASLLexersym.Char_DoubleQuote,     // 034    0x22
+        ASLLexersym.Char_Sharp,           // 035    0x23
+        ASLLexersym.Char_DollarSign,      // 036    0x24
+        ASLLexersym.Char_Percent,         // 037    0x25
+        ASLLexersym.Char_Ampersand,       // 038    0x26
+        ASLLexersym.Char_SingleQuote,     // 039    0x27
+        ASLLexersym.Char_LeftParen,       // 040    0x28
+        ASLLexersym.Char_RightParen,      // 041    0x29
+        ASLLexersym.Char_Star,            // 042    0x2A
+        ASLLexersym.Char_Plus,            // 043    0x2B
+        ASLLexersym.Char_Comma,           // 044    0x2C
+        ASLLexersym.Char_Minus,           // 045    0x2D
+        ASLLexersym.Char_Dot,             // 046    0x2E
+        ASLLexersym.Char_Slash,           // 047    0x2F
+        ASLLexersym.Char_0,               // 048    0x30
+        ASLLexersym.Char_1,               // 049    0x31
+        ASLLexersym.Char_2,               // 050    0x32
+        ASLLexersym.Char_3,               // 051    0x33
+        ASLLexersym.Char_4,               // 052    0x34
+        ASLLexersym.Char_5,               // 053    0x35
+        ASLLexersym.Char_6,               // 054    0x36
+        ASLLexersym.Char_7,               // 055    0x37
+        ASLLexersym.Char_8,               // 056    0x38
+        ASLLexersym.Char_9,               // 057    0x39
+        ASLLexersym.Char_Colon,           // 058    0x3A
+        ASLLexersym.Char_SemiColon,       // 059    0x3B
+        ASLLexersym.Char_LessThan,        // 060    0x3C
+        ASLLexersym.Char_Equal,           // 061    0x3D
+        ASLLexersym.Char_GreaterThan,     // 062    0x3E
+        ASLLexersym.Char_QuestionMark,    // 063    0x3F
+        ASLLexersym.Char_AtSign,          // 064    0x40
+        ASLLexersym.Char_A,               // 065    0x41
+        ASLLexersym.Char_B,               // 066    0x42
+        ASLLexersym.Char_C,               // 067    0x43
+        ASLLexersym.Char_D,               // 068    0x44
+        ASLLexersym.Char_E,               // 069    0x45
+        ASLLexersym.Char_F,               // 070    0x46
+        ASLLexersym.Char_G,               // 071    0x47
+        ASLLexersym.Char_H,               // 072    0x48
+        ASLLexersym.Char_I,               // 073    0x49
+        ASLLexersym.Char_J,               // 074    0x4A
+        ASLLexersym.Char_K,               // 075    0x4B
+        ASLLexersym.Char_L,               // 076    0x4C
+        ASLLexersym.Char_M,               // 077    0x4D
+        ASLLexersym.Char_N,               // 078    0x4E
+        ASLLexersym.Char_O,               // 079    0x4F
+        ASLLexersym.Char_P,               // 080    0x50
+        ASLLexersym.Char_Q,               // 081    0x51
+        ASLLexersym.Char_R,               // 082    0x52
+        ASLLexersym.Char_S,               // 083    0x53
+        ASLLexersym.Char_T,               // 084    0x54
+        ASLLexersym.Char_U,               // 085    0x55
+        ASLLexersym.Char_V,               // 086    0x56
+        ASLLexersym.Char_W,               // 087    0x57
+        ASLLexersym.Char_X,               // 088    0x58
+        ASLLexersym.Char_Y,               // 089    0x59
+        ASLLexersym.Char_Z,               // 090    0x5A
+        ASLLexersym.Char_LeftBracket,     // 091    0x5B
+        ASLLexersym.Char_BackSlash,       // 092    0x5C
+        ASLLexersym.Char_RightBracket,    // 093    0x5D
+        ASLLexersym.Char_Caret,           // 094    0x5E
+        ASLLexersym.Char__,               // 095    0x5F
+        ASLLexersym.Char_BackQuote,       // 096    0x60
+        ASLLexersym.Char_a,               // 097    0x61
+        ASLLexersym.Char_b,               // 098    0x62
+        ASLLexersym.Char_c,               // 099    0x63
+        ASLLexersym.Char_d,               // 100    0x64
+        ASLLexersym.Char_e,               // 101    0x65
+        ASLLexersym.Char_f,               // 102    0x66
+        ASLLexersym.Char_g,               // 103    0x67
+        ASLLexersym.Char_h,               // 104    0x68
+        ASLLexersym.Char_i,               // 105    0x69
+        ASLLexersym.Char_j,               // 106    0x6A
+        ASLLexersym.Char_k,               // 107    0x6B
+        ASLLexersym.Char_l,               // 108    0x6C
+        ASLLexersym.Char_m,               // 109    0x6D
+        ASLLexersym.Char_n,               // 110    0x6E
+        ASLLexersym.Char_o,               // 111    0x6F
+        ASLLexersym.Char_p,               // 112    0x70
+        ASLLexersym.Char_q,               // 113    0x71
+        ASLLexersym.Char_r,               // 114    0x72
+        ASLLexersym.Char_s,               // 115    0x73
+        ASLLexersym.Char_t,               // 116    0x74
+        ASLLexersym.Char_u,               // 117    0x75
+        ASLLexersym.Char_v,               // 118    0x76
+        ASLLexersym.Char_w,               // 119    0x77
+        ASLLexersym.Char_x,               // 120    0x78
+        ASLLexersym.Char_y,               // 121    0x79
+        ASLLexersym.Char_z,               // 122    0x7A
+        ASLLexersym.Char_LeftBrace,       // 123    0x7B
+        ASLLexersym.Char_VerticalBar,     // 124    0x7C
+        ASLLexersym.Char_RightBrace,      // 125    0x7D
+        ASLLexersym.Char_Tilde,           // 126    0x7E
 
-        Char_AfterASCII,      // for all chars in range 128..65534
-        Char_EOF              // for '\uffff' or 65535 
+        ASLLexersym.Char_AfterASCII,      // for all chars in range 128..65534
+        ASLLexersym.Char_EOF              // for '\uffff' or 65535 
     };
             
     public final int getKind(int i)  // Classify character at ith location
@@ -370,8 +378,8 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
         return (c < 128 // ASCII Character
                   ? tokenKind[c]
                   : c == '\uffff'
-                       ? Char_EOF
-                       : Char_AfterASCII);
+                       ? ASLLexersym.Char_EOF
+                       : ASLLexersym.Char_AfterASCII);
     }
 
     public String[] orderedExportedSymbols() { return ASLParsersym.orderedTerminalSymbols; }
@@ -396,230 +404,230 @@ public class ASLLexer implements ASLParsersym, ASLLexersym, RuleAction, ILexer
     {
         switch(ruleNumber)
         {
- 
+
             //
             // Rule 1:  Token ::= identifier
             //
             case 1: { 
             
                 checkForKeyWord();
-                      break;
+                  break;
             }
-     
+    
             //
             // Rule 2:  Token ::= IntegerLiteral
             //
             case 2: { 
             
-                makeToken(TK_IntegerLiteral);
-                      break;
+                makeToken(ASLParsersym.TK_IntegerLiteral);
+                  break;
             }
-     
+    
             //
             // Rule 3:  Token ::= DoubleLiteral
             //
             case 3: { 
             
-                makeToken(TK_DoubleLiteral);
-                      break;
+                makeToken(ASLParsersym.TK_DoubleLiteral);
+                  break;
             }
-     
+    
             //
             // Rule 4:  Token ::= white
             //
             case 4: { 
             
                 skipToken();
-                      break;
+                  break;
             }
-     
+    
             //
             // Rule 5:  Token ::= slc
             //
             case 5: { 
             
-                makeComment(TK_SINGLE_LINE_COMMENT);
-                      break;
+                makeComment(ASLParsersym.TK_SINGLE_LINE_COMMENT);
+                  break;
             }
-     
+    
             //
             // Rule 6:  Token ::= .
             //
             case 6: { 
             
-                makeToken(TK_DOT);
-                      break;
+                makeToken(ASLParsersym.TK_DOT);
+                  break;
             }
-     
+    
             //
             // Rule 7:  Token ::= ;
             //
             case 7: { 
             
-                makeToken(TK_SEMICOLON);
-                      break;
+                makeToken(ASLParsersym.TK_SEMICOLON);
+                  break;
             }
-     
+    
             //
             // Rule 8:  Token ::= :
             //
             case 8: { 
             
-                makeToken(TK_COLON);
-                      break;
+                makeToken(ASLParsersym.TK_COLON);
+                  break;
             }
-     
+    
             //
             // Rule 9:  Token ::= ,
             //
             case 9: { 
             
-                makeToken(TK_COMMA);
-                      break;
+                makeToken(ASLParsersym.TK_COMMA);
+                  break;
             }
-     
+    
             //
             // Rule 10:  Token ::= +
             //
             case 10: { 
             
-                makeToken(TK_PLUS);
-                      break;
+                makeToken(ASLParsersym.TK_PLUS);
+                  break;
             }
-     
+    
             //
             // Rule 11:  Token ::= *
             //
             case 11: { 
             
-                makeToken(TK_STAR);
-                      break;
+                makeToken(ASLParsersym.TK_STAR);
+                  break;
             }
-     
+    
             //
             // Rule 12:  Token ::= : =
             //
             case 12: { 
             
-                makeToken(TK_ASSIGN);
-                      break;
+                makeToken(ASLParsersym.TK_ASSIGN);
+                  break;
             }
-     
+    
             //
             // Rule 13:  Token ::= (
             //
             case 13: { 
             
-                makeToken(TK_LEFTPAREN);
-                      break;
+                makeToken(ASLParsersym.TK_LEFTPAREN);
+                  break;
             }
-     
+    
             //
             // Rule 14:  Token ::= )
             //
             case 14: { 
             
-                makeToken(TK_RIGHTPAREN);
-                      break;
+                makeToken(ASLParsersym.TK_RIGHTPAREN);
+                  break;
             }
-     
+    
             //
             // Rule 15:  Token ::= {
             //
             case 15: { 
             
-                makeToken(TK_LEFTBRACE);
-                      break;
+                makeToken(ASLParsersym.TK_LEFTBRACE);
+                  break;
             }
-     
+    
             //
             // Rule 16:  Token ::= }
             //
             case 16: { 
             
-                makeToken(TK_RIGHTBRACE);
-                      break;
+                makeToken(ASLParsersym.TK_RIGHTBRACE);
+                  break;
             }
-     
+    
             //
             // Rule 17:  Token ::= [
             //
             case 17: { 
             
-                makeToken(TK_LEFTBRACKET);
-                      break;
+                makeToken(ASLParsersym.TK_LEFTBRACKET);
+                  break;
             }
-     
+    
             //
             // Rule 18:  Token ::= ]
             //
             case 18: { 
             
-                makeToken(TK_RIGHTBRACKET);
-                      break;
+                makeToken(ASLParsersym.TK_RIGHTBRACKET);
+                  break;
             }
-     
+    
             //
             // Rule 19:  Token ::= >
             //
             case 19: { 
             
-                makeToken(TK_GREATER);
-                      break;
+                makeToken(ASLParsersym.TK_GREATER);
+                  break;
             }
-     
+    
             //
             // Rule 20:  Token ::= <
             //
             case 20: { 
             
-                makeToken(TK_LESS);
-                      break;
+                makeToken(ASLParsersym.TK_LESS);
+                  break;
             }
-     
+    
             //
             // Rule 21:  Token ::= = >
             //
             case 21: { 
             
-                makeToken(TK_ARROW);
-                      break;
+                makeToken(ASLParsersym.TK_ARROW);
+                  break;
             }
-     
+    
             //
             // Rule 22:  Token ::= =
             //
             case 22: { 
             
-                makeToken(TK_EQUAL);
-                      break;
+                makeToken(ASLParsersym.TK_EQUAL);
+                  break;
             }
-     
+    
             //
             // Rule 23:  Token ::= ! =
             //
             case 23: { 
             
-                makeToken(TK_NOTEQUAL);
-                      break;
+                makeToken(ASLParsersym.TK_NOTEQUAL);
+                  break;
             }
-     
+    
             //
             // Rule 24:  Token ::= |
             //
             case 24: { 
             
-                makeToken(TK_VBAR);
-                      break;
+                makeToken(ASLParsersym.TK_VBAR);
+                  break;
             }
-      
+     
             //
             // Rule 25:  Token ::= StringLiteral
             //
             case 25: { 
             
-                makeToken(TK_StringLiteral);
-                      break;
+                makeToken(ASLParsersym.TK_StringLiteral);
+                  break;
             }
      
     

@@ -1,8 +1,8 @@
 %options package=org.eclipse.imp.asl.parser
-%options template=KeywordTemplate.gi
+%options template=KeywordTemplateF.gi
 
 %Include
-    KWLexerMap.gi
+    KWLexerMapF.gi
 %End
 
 %Export

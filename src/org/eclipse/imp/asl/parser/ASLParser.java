@@ -1,14 +1,15 @@
-/*******************************************************************************
-* Copyright (c) 2007 IBM Corporation.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*    Robert Fuhrer (rfuhrer@watson.ibm.com) - initial API and implementation
 
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2007 IBM Corporation.
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+//
+//Contributors:
+//    Philippe Charles (pcharles@us.ibm.com) - initial API and implementation
+
+////////////////////////////////////////////////////////////////////////////////
 
 package org.eclipse.imp.asl.parser;
 
@@ -66,7 +67,7 @@ public class ASLParser implements RuleAction, IParser
 
         try
         {
-            prsStream.remapTerminalSymbols(orderedTerminalSymbols(), ASLParserprs.EOFT_SYMBOL);
+            prsStream.remapTerminalSymbols(orderedTerminalSymbols(), prsTable.getEoftSymbol());
         }
         catch(NullExportedSymbolsException e) {
         }
@@ -89,7 +90,7 @@ public class ASLParser implements RuleAction, IParser
         {
             throw new Error(new UndefinedEofSymbolException
                                 ("The Lexer does not implement the Eof symbol " +
-                                 ASLParsersym.orderedTerminalSymbols[ASLParserprs.EOFT_SYMBOL]));
+                                 ASLParsersym.orderedTerminalSymbols[prsTable.getEoftSymbol()]));
         }
     }
     
@@ -119,7 +120,19 @@ public class ASLParser implements RuleAction, IParser
     public int numTokenKinds() { return ASLParsersym.numTokenKinds; }
     public String[] orderedTerminalSymbols() { return ASLParsersym.orderedTerminalSymbols; }
     public String getTokenKindName(int kind) { return ASLParsersym.orderedTerminalSymbols[kind]; }            
-    public int getEOFTokenKind() { return ASLParserprs.EOFT_SYMBOL; }
+    public int getEOFTokenKind() { return prsTable.getEoftSymbol(); }
+    public IPrsStream getIPrsStream() { return prsStream; }
+
+    /**
+     * @deprecated replaced by {@link #getIPrsStream()}
+     *
+     */
+    public PrsStream getPrsStream() { return prsStream; }
+
+    /**
+     * @deprecated replaced by {@link #getIPrsStream()}
+     *
+     */
     public PrsStream getParseStream() { return prsStream; }
 
     public Object parser()
@@ -204,7 +217,7 @@ public class ASLParser implements RuleAction, IParser
     {
         switch (ruleNumber)
         {
- 
+
             //
             // Rule 2:  compilationUnit ::= $Empty
             //
@@ -213,7 +226,7 @@ public class ASLParser implements RuleAction, IParser
                     new topLevelDeclarationList(getLeftIToken(), getRightIToken(), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 3:  compilationUnit ::= compilationUnit topLevelDeclaration
             //
@@ -222,37 +235,37 @@ public class ASLParser implements RuleAction, IParser
                     new topLevelDeclarationList((ItopLevelDeclaration)getRhsSym(2), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 4:  topLevelDeclaration ::= functionDeclaration
             //
             case 4:
-                break; 
+                break;
             //
             // Rule 5:  topLevelDeclaration ::= algebraicTypeDeclaration
             //
             case 5:
-                break; 
+                break;
             //
             // Rule 6:  topLevelDeclaration ::= typeDef
             //
             case 6:
-                break; 
+                break;
             //
             // Rule 7:  topLevelDeclaration ::= rulesSpecification
             //
             case 7:
-                break; 
+                break;
             //
             // Rule 8:  topLevelDeclaration ::= analysisSpecification
             //
             case 8:
-                break; 
+                break;
             //
             // Rule 9:  topLevelDeclaration ::= variableDeclaration
             //
             case 9:
-                break; 
+                break;
             //
             // Rule 10:  functionDeclaration ::= functionHeader =$ value
             //
@@ -263,7 +276,7 @@ public class ASLParser implements RuleAction, IParser
                                             (Ivalue)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 11:  functionHeader ::= typeSpecifier identifier ($ parameters )$
             //
@@ -275,7 +288,7 @@ public class ASLParser implements RuleAction, IParser
                                        (declarationList)getRhsSym(4))
                 );
                 break;
-            } 
+            }
             //
             // Rule 12:  parameters ::= $Empty
             //
@@ -284,12 +297,12 @@ public class ASLParser implements RuleAction, IParser
                     new declarationList(getLeftIToken(), getRightIToken(), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 13:  parameters ::= parameterList
             //
             case 13:
-                break; 
+                break;
             //
             // Rule 14:  parameterList ::= declaration
             //
@@ -298,14 +311,14 @@ public class ASLParser implements RuleAction, IParser
                     new declarationList((declaration)getRhsSym(1), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 15:  parameterList ::= parameterList ,$ declaration
             //
             case 15: {
                 ((declarationList)getRhsSym(1)).add((declaration)getRhsSym(3));
                 break;
-            } 
+            }
             //
             // Rule 16:  declaration ::= typeSpecifier identifier
             //
@@ -316,7 +329,7 @@ public class ASLParser implements RuleAction, IParser
                                     (identifier)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 17:  algebraicTypeDeclaration ::= atype$ identifier =$ ctorList
             //
@@ -327,7 +340,7 @@ public class ASLParser implements RuleAction, IParser
                                                  (ctorDeclarationList)getRhsSym(4))
                 );
                 break;
-            } 
+            }
             //
             // Rule 18:  ctorList ::= ctorDeclaration
             //
@@ -336,14 +349,14 @@ public class ASLParser implements RuleAction, IParser
                     new ctorDeclarationList((ctorDeclaration)getRhsSym(1), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 19:  ctorList ::= ctorList |$ ctorDeclaration
             //
             case 19: {
                 ((ctorDeclarationList)getRhsSym(1)).add((ctorDeclaration)getRhsSym(3));
                 break;
-            } 
+            }
             //
             // Rule 20:  ctorDeclaration ::= identifier optFormalArgList
             //
@@ -354,14 +367,14 @@ public class ASLParser implements RuleAction, IParser
                                         (optFormalArgList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 21:  optFormalArgList ::= $Empty
             //
             case 21: {
                 setResult(null);
                 break;
-            } 
+            }
             //
             // Rule 22:  optFormalArgList ::= ($ formalArgList )$
             //
@@ -371,7 +384,7 @@ public class ASLParser implements RuleAction, IParser
                                          (formalArgList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 23:  formalArgList ::= formalArg
             //
@@ -380,14 +393,14 @@ public class ASLParser implements RuleAction, IParser
                     new formalArgList((formalArg)getRhsSym(1), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 24:  formalArgList ::= formalArgList ,$ formalArg
             //
             case 24: {
                 ((formalArgList)getRhsSym(1)).add((formalArg)getRhsSym(3));
                 break;
-            } 
+            }
             //
             // Rule 25:  formalArg ::= typeName$type identifier$name
             //
@@ -398,7 +411,7 @@ public class ASLParser implements RuleAction, IParser
                                   (identifier)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 26:  typeDef ::= type identifier =$ typeSpecifier
             //
@@ -410,7 +423,7 @@ public class ASLParser implements RuleAction, IParser
                                 (ItypeSpecifier)getRhsSym(4))
                 );
                 break;
-            } 
+            }
             //
             // Rule 27:  rulesSpecification ::= rules rulesList
             //
@@ -421,7 +434,7 @@ public class ASLParser implements RuleAction, IParser
                                            (ruleList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 28:  rulesList ::= rule
             //
@@ -430,7 +443,7 @@ public class ASLParser implements RuleAction, IParser
                     new ruleList((rule)getRhsSym(1), false /* not left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 29:  rulesList ::= rule rulesList
             //
@@ -438,7 +451,7 @@ public class ASLParser implements RuleAction, IParser
                 ((ruleList)getRhsSym(2)).add((rule)getRhsSym(1));
                 setResult(getRhsSym(2));
                 break;
-            } 
+            }
             //
             // Rule 30:  rule ::= algebraicTypeValue =>$ algebraicTypeValue
             //
@@ -449,7 +462,7 @@ public class ASLParser implements RuleAction, IParser
                              (algebraicTypeValue)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 31:  analysisSpecification ::= analysis identifier constraintsDef estimatesDef satisfyDef end
             //
@@ -464,7 +477,7 @@ public class ASLParser implements RuleAction, IParser
                                               new ASTNodeToken(getRhsIToken(6)))
                 );
                 break;
-            } 
+            }
             //
             // Rule 32:  constraintsDef ::= constraints value
             //
@@ -475,7 +488,7 @@ public class ASLParser implements RuleAction, IParser
                                        (Ivalue)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 33:  estimatesDef ::= estimates identifier
             //
@@ -486,7 +499,7 @@ public class ASLParser implements RuleAction, IParser
                                      (identifier)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 34:  satisfyDef ::= satisfy ($ <$ typeSpecifier ,$ typeSpecifier >$ )$ {$ localOrUpdateList }$
             //
@@ -499,12 +512,12 @@ public class ASLParser implements RuleAction, IParser
                                    (IlocalOrUpdateList)getRhsSym(10))
                 );
                 break;
-            } 
+            }
             //
             // Rule 35:  localOrUpdateList ::= localOrUpdate
             //
             case 35:
-                break; 
+                break;
             //
             // Rule 36:  localOrUpdateList ::= localOrUpdateList localOrUpdate
             //
@@ -515,17 +528,17 @@ public class ASLParser implements RuleAction, IParser
                                           (IlocalOrUpdate)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 37:  localOrUpdate ::= local
             //
             case 37:
-                break; 
+                break;
             //
             // Rule 38:  localOrUpdate ::= update
             //
             case 38:
-                break; 
+                break;
             //
             // Rule 39:  local ::= identifier :=$ value
             //
@@ -536,7 +549,7 @@ public class ASLParser implements RuleAction, IParser
                               (Ivalue)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 40:  update ::= estimates [$ identifier ]$ :=$ value
             //
@@ -548,7 +561,7 @@ public class ASLParser implements RuleAction, IParser
                                (Ivalue)getRhsSym(6))
                 );
                 break;
-            } 
+            }
             //
             // Rule 41:  variableDeclaration ::= typeName identifier value
             //
@@ -560,12 +573,12 @@ public class ASLParser implements RuleAction, IParser
                                             (Ivalue)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 42:  typeName ::= identifier
             //
             case 42:
-                break; 
+                break;
             //
             // Rule 43:  typeName ::= int
             //
@@ -574,7 +587,7 @@ public class ASLParser implements RuleAction, IParser
                     new typeName0(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 44:  typeName ::= double
             //
@@ -583,7 +596,7 @@ public class ASLParser implements RuleAction, IParser
                     new typeName1(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 45:  typeName ::= boolean
             //
@@ -592,7 +605,7 @@ public class ASLParser implements RuleAction, IParser
                     new typeName2(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 46:  typeName ::= string
             //
@@ -601,7 +614,7 @@ public class ASLParser implements RuleAction, IParser
                     new typeName3(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 47:  identifier ::= IDENTIFIER
             //
@@ -610,42 +623,42 @@ public class ASLParser implements RuleAction, IParser
                     new identifier(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 48:  value ::= tupleLiteral
             //
             case 48:
-                break; 
+                break;
             //
             // Rule 49:  value ::= setLiteral
             //
             case 49:
-                break; 
+                break;
             //
             // Rule 50:  value ::= mapLiteral
             //
             case 50:
-                break; 
+                break;
             //
             // Rule 51:  value ::= relationLiteral
             //
             case 51:
-                break; 
+                break;
             //
             // Rule 52:  value ::= mapLookup
             //
             case 52:
-                break; 
+                break;
             //
             // Rule 53:  value ::= tupleSlot
             //
             case 53:
-                break; 
+                break;
             //
             // Rule 54:  value ::= algebraicTypeValue
             //
             case 54:
-                break; 
+                break;
             //
             // Rule 55:  value ::= IntegerLiteral
             //
@@ -654,7 +667,7 @@ public class ASLParser implements RuleAction, IParser
                     new value0(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 56:  value ::= DoubleLiteral
             //
@@ -663,7 +676,7 @@ public class ASLParser implements RuleAction, IParser
                     new value1(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 57:  value ::= StringLiteral
             //
@@ -672,42 +685,42 @@ public class ASLParser implements RuleAction, IParser
                     new value2(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 58:  value ::= booleanValue
             //
             case 58:
-                break; 
+                break;
             //
             // Rule 59:  value ::= functionCall
             //
             case 59:
-                break; 
+                break;
             //
             // Rule 60:  value ::= caseExpr
             //
             case 60:
-                break; 
+                break;
             //
             // Rule 61:  value ::= unionExpr
             //
             case 61:
-                break; 
+                break;
             //
             // Rule 62:  value ::= intersectExpr
             //
             case 62:
-                break; 
+                break;
             //
             // Rule 63:  value ::= relationClosure
             //
             case 63:
-                break; 
+                break;
             //
             // Rule 64:  value ::= identifier
             //
             case 64:
-                break; 
+                break;
             //
             // Rule 65:  tupleLiteral ::= <$ values >$
             //
@@ -717,7 +730,7 @@ public class ASLParser implements RuleAction, IParser
                                      (valueList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 66:  setLiteral ::= {$ values }$
             //
@@ -727,7 +740,7 @@ public class ASLParser implements RuleAction, IParser
                                    (valueList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 67:  mapLiteral ::= {$ mappings }$
             //
@@ -737,19 +750,19 @@ public class ASLParser implements RuleAction, IParser
                                    (mappingList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 68:  mappings ::= $Empty
             //
             case 68: {
                 setResult(null);
                 break;
-            } 
+            }
             //
             // Rule 69:  mappings ::= mappingList
             //
             case 69:
-                break; 
+                break;
             //
             // Rule 70:  mappingList ::= mapping
             //
@@ -758,14 +771,14 @@ public class ASLParser implements RuleAction, IParser
                     new mappingList((mapping)getRhsSym(1), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 71:  mappingList ::= mappingList mapping
             //
             case 71: {
                 ((mappingList)getRhsSym(1)).add((mapping)getRhsSym(2));
                 break;
-            } 
+            }
             //
             // Rule 72:  mapping ::= value =>$ value
             //
@@ -776,7 +789,7 @@ public class ASLParser implements RuleAction, IParser
                                 (Ivalue)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 73:  relationLiteral ::= [$ tuples ]$
             //
@@ -786,19 +799,19 @@ public class ASLParser implements RuleAction, IParser
                                         (tupleLiteralList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 74:  tuples ::= $Empty
             //
             case 74: {
                 setResult(null);
                 break;
-            } 
+            }
             //
             // Rule 75:  tuples ::= tupleList
             //
             case 75:
-                break; 
+                break;
             //
             // Rule 76:  tupleList ::= tupleLiteral
             //
@@ -807,7 +820,7 @@ public class ASLParser implements RuleAction, IParser
                     new tupleLiteralList((tupleLiteral)getRhsSym(1), false /* not left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 77:  tupleList ::= tupleLiteral ,$ tupleList
             //
@@ -815,7 +828,7 @@ public class ASLParser implements RuleAction, IParser
                 ((tupleLiteralList)getRhsSym(3)).add((tupleLiteral)getRhsSym(1));
                 setResult(getRhsSym(3));
                 break;
-            } 
+            }
             //
             // Rule 78:  mapLookup ::= value [$ value ]$
             //
@@ -826,7 +839,7 @@ public class ASLParser implements RuleAction, IParser
                                   (Ivalue)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 79:  tupleSlot ::= value .$ identifier
             //
@@ -837,7 +850,7 @@ public class ASLParser implements RuleAction, IParser
                                   (identifier)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 80:  algebraicTypeValue ::= identifier optArgList
             //
@@ -848,14 +861,14 @@ public class ASLParser implements RuleAction, IParser
                                            (optArgList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 81:  optArgList ::= $Empty
             //
             case 81: {
                 setResult(null);
                 break;
-            } 
+            }
             //
             // Rule 82:  optArgList ::= ($ values )$
             //
@@ -865,7 +878,7 @@ public class ASLParser implements RuleAction, IParser
                                    (valueList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 83:  booleanValue ::= true
             //
@@ -874,7 +887,7 @@ public class ASLParser implements RuleAction, IParser
                     new booleanValue0(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 84:  booleanValue ::= false
             //
@@ -883,7 +896,7 @@ public class ASLParser implements RuleAction, IParser
                     new booleanValue1(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 85:  functionCall ::= identifier ($ values )$
             //
@@ -894,19 +907,19 @@ public class ASLParser implements RuleAction, IParser
                                      (valueList)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 86:  values ::= $Empty
             //
             case 86: {
                 setResult(null);
                 break;
-            } 
+            }
             //
             // Rule 87:  values ::= valueList
             //
             case 87:
-                break; 
+                break;
             //
             // Rule 88:  valueList ::= value
             //
@@ -915,7 +928,7 @@ public class ASLParser implements RuleAction, IParser
                     new valueList((Ivalue)getRhsSym(1), false /* not left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 89:  valueList ::= value ,$ valueList
             //
@@ -923,7 +936,7 @@ public class ASLParser implements RuleAction, IParser
                 ((valueList)getRhsSym(3)).add((Ivalue)getRhsSym(1));
                 setResult(getRhsSym(3));
                 break;
-            } 
+            }
             //
             // Rule 90:  caseExpr ::= case caseList
             //
@@ -934,7 +947,7 @@ public class ASLParser implements RuleAction, IParser
                                  (caseSpecList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 91:  caseList ::= caseSpec
             //
@@ -943,14 +956,14 @@ public class ASLParser implements RuleAction, IParser
                     new caseSpecList((IcaseSpec)getRhsSym(1), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 92:  caseList ::= caseList caseSpec
             //
             case 92: {
                 ((caseSpecList)getRhsSym(1)).add((IcaseSpec)getRhsSym(2));
                 break;
-            } 
+            }
             //
             // Rule 93:  caseSpec ::= identifier =$ value :$ value
             //
@@ -962,14 +975,14 @@ public class ASLParser implements RuleAction, IParser
                                   (Ivalue)getRhsSym(5))
                 );
                 break;
-            } 
+            }
             //
             // Rule 94:  caseSpec ::=
             //
             case 94: {
                 setResult(null);
                 break;
-            } 
+            }
             //
             // Rule 95:  caseSpec ::= else value
             //
@@ -980,7 +993,7 @@ public class ASLParser implements RuleAction, IParser
                                   (Ivalue)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 96:  unionExpr ::= value union value
             //
@@ -992,7 +1005,7 @@ public class ASLParser implements RuleAction, IParser
                                   (Ivalue)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 97:  intersectExpr ::= value intersect value
             //
@@ -1004,7 +1017,7 @@ public class ASLParser implements RuleAction, IParser
                                       (Ivalue)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 98:  relationClosure ::= value +
             //
@@ -1015,7 +1028,7 @@ public class ASLParser implements RuleAction, IParser
                                          new ASTNodeToken(getRhsIToken(2)))
                 );
                 break;
-            } 
+            }
             //
             // Rule 99:  relationClosure ::= value *
             //
@@ -1026,37 +1039,37 @@ public class ASLParser implements RuleAction, IParser
                                          new ASTNodeToken(getRhsIToken(2)))
                 );
                 break;
-            } 
+            }
             //
             // Rule 100:  typeSpecifier ::= relationSpecifier
             //
             case 100:
-                break; 
+                break;
             //
             // Rule 101:  typeSpecifier ::= tupleSpecifier
             //
             case 101:
-                break; 
+                break;
             //
             // Rule 102:  typeSpecifier ::= setSpecifier
             //
             case 102:
-                break; 
+                break;
             //
             // Rule 103:  typeSpecifier ::= refSpecifier
             //
             case 103:
-                break; 
+                break;
             //
             // Rule 104:  typeSpecifier ::= scalarType
             //
             case 104:
-                break; 
+                break;
             //
             // Rule 105:  typeSpecifier ::= qualifiedIdentifier
             //
             case 105:
-                break; 
+                break;
             //
             // Rule 106:  relationSpecifier ::= relation [$ typeSpecifierList ]$
             //
@@ -1067,7 +1080,7 @@ public class ASLParser implements RuleAction, IParser
                                           (typeSpecifierList)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 107:  tupleSpecifier ::= <$ typeSpecifierList >$
             //
@@ -1077,7 +1090,7 @@ public class ASLParser implements RuleAction, IParser
                                        (typeSpecifierList)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 108:  setSpecifier ::= set [$ typeSpecifier ]$
             //
@@ -1088,7 +1101,7 @@ public class ASLParser implements RuleAction, IParser
                                      (ItypeSpecifier)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 109:  refSpecifier ::= ref typeName
             //
@@ -1099,7 +1112,7 @@ public class ASLParser implements RuleAction, IParser
                                      (ItypeName)getRhsSym(2))
                 );
                 break;
-            } 
+            }
             //
             // Rule 110:  scalarType ::= int
             //
@@ -1108,7 +1121,7 @@ public class ASLParser implements RuleAction, IParser
                     new scalarType0(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 111:  scalarType ::= double
             //
@@ -1117,7 +1130,7 @@ public class ASLParser implements RuleAction, IParser
                     new scalarType1(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 112:  scalarType ::= string
             //
@@ -1126,7 +1139,7 @@ public class ASLParser implements RuleAction, IParser
                     new scalarType2(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 113:  scalarType ::= boolean
             //
@@ -1135,12 +1148,12 @@ public class ASLParser implements RuleAction, IParser
                     new scalarType3(getRhsIToken(1))
                 );
                 break;
-            } 
+            }
             //
             // Rule 114:  qualifiedIdentifier ::= identifier
             //
             case 114:
-                break; 
+                break;
             //
             // Rule 115:  qualifiedIdentifier ::= qualifiedIdentifier .$ identifier
             //
@@ -1151,7 +1164,7 @@ public class ASLParser implements RuleAction, IParser
                                             (identifier)getRhsSym(3))
                 );
                 break;
-            } 
+            }
             //
             // Rule 116:  typeSpecifierList ::= typeSpecifier
             //
@@ -1160,7 +1173,7 @@ public class ASLParser implements RuleAction, IParser
                     new typeSpecifierList((ItypeSpecifier)getRhsSym(1), true /* left recursive */)
                 );
                 break;
-            } 
+            }
             //
             // Rule 117:  typeSpecifierList ::= typeSpecifierList ,$ typeSpecifier
             //
