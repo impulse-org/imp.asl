@@ -306,7 +306,7 @@ public class ASLCompiler {
         // what types of problem marker the builder will create
         parseController.getAnnotationTypeInfo().addProblemMarkerType(PROBLEM_MARKER_ID);
         parseController.initialize(file.getProjectRelativePath(), sourceProject, markerCreator);
-        parseController.parse(getFileContents(file), false, mon);
+        parseController.parse(getFileContents(file), mon);
         ASTNode currentAst= (ASTNode) parseController.getCurrentAst();
         if (currentAst == null) {
             System.err.println("ASLCompiler.compile(..):  current AST is null (parse errors?); unable to compile.");

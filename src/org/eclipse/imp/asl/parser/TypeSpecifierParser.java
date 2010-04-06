@@ -29,6 +29,7 @@ import org.eclipse.imp.asl.parser.ast.tupleSpecifier;
 import org.eclipse.imp.pdb.facts.type.ITypeVisitor;
 import org.eclipse.imp.pdb.facts.type.Type;
 import org.eclipse.imp.pdb.facts.type.TypeFactory;
+import org.eclipse.imp.pdb.facts.type.TypeStore;
 
 public class TypeSpecifierParser {
     private ASLLexer fTypeSpecLexer;
@@ -56,6 +57,7 @@ public class TypeSpecifierParser {
     }
 
     private Type parseTypeSpecifier(String typeSpec) {
+        final TypeStore ts= new TypeStore();
         char[] contentsArray= typeSpec.toCharArray();
         fTypeSpecLexer.reset(contentsArray, null /*fullFilePath.toOSString()*/);
         fTypeSpecParser.reset(fTypeSpecLexer.getILexStream());
@@ -120,7 +122,7 @@ public class TypeSpecifierParser {
             }
             @Override
             public void endVisit(scalarType1 n) {
-                fStack.push(tf.doubleType());
+                fStack.push(tf.realType());
             }
             @Override
             public void endVisit(scalarType2 n) {
@@ -128,7 +130,7 @@ public class TypeSpecifierParser {
             }
             @Override
             public void endVisit(qualifiedIdentifier n) {
-                Type nType= tf.lookupNamedType(n.toString());
+                Type nType= ts.getAlias(n.toString());
                 if (nType != null) {
                     fStack.push(nType);
                 }

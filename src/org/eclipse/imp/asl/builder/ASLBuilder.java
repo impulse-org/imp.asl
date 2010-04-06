@@ -148,7 +148,7 @@ public class ASLBuilder extends BuilderBase {
             parseController.initialize(file.getProjectRelativePath(), sourceProject, markerCreator);
             String contents= BuilderUtils.getFileContents(file);
             // Finally parse it
-            parseController.parse(contents, false, monitor);
+            parseController.parse(contents, monitor);
             doRefresh(file.getParent());
         } catch (Exception e) {
             getPlugin().writeErrorMsg(e.getMessage());
