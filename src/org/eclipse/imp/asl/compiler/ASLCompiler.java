@@ -301,7 +301,7 @@ public class ASLCompiler {
         }
         IParseController parseController= new ASLParseController();
         // Marker creator handles error messages from the parse controller
-        MarkerCreator markerCreator= new MarkerCreator(file, parseController, PROBLEM_MARKER_ID);
+        MarkerCreator markerCreator= new MarkerCreator(file, PROBLEM_MARKER_ID);
         // If we have a kind of parser that might be receptive, tell it
         // what types of problem marker the builder will create
         parseController.getAnnotationTypeInfo().addProblemMarkerType(PROBLEM_MARKER_ID);
